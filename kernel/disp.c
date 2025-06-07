@@ -1,0 +1,41 @@
+#include "disp.h"
+#include "stdint.h"
+uint16_t col = 0;
+uint16_t line = 0;
+  int cycle;
+int cycle2;
+int cline;
+    char *hex = (char *)0xb8000;
+int println(const char *string) {
+     while(1) {
+       if (string[cycle] == 0x0) {
+	 break;
+       } else if (string[cycle] == '\n') {
+	 cycle2 = cycle2 + (cline * 2);
+	 cline = 0;
+	 cycle++;
+       }
+       hex[cycle2] = string[cycle];
+	hex[cycle2 + 1] = 0x02;
+	cycle++;
+	cline++;
+	cycle2 = cycle2 + 2;
+     }
+     return 0;
+}
+int spinner() {
+  int n;
+  while(1) {
+    hex[cycle2 + 2] = '|';
+      hex[cycle2 + 3] = 0x02;
+      hex[cycle2 + 2] = '/';
+      hex[cycle2 + 2] = '-';
+      hex[cycle2 + 2] = '\\';
+	}
+}
+int panic(char *error) {
+  println("\nPANIC:");
+  println(error);
+  println(" Halting...");
+  __asm__("hlt");
+}

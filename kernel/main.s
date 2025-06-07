@@ -1,55 +1,20 @@
-bits 16
-%include "kernel/syscalls.inc"
-_start:
-	mov ah, 0x0e
-	mov al, 0x0D
-	int 0x10
-	mov ah, 0x0e
-	mov al, 0x0A
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'H'
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'a'
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'c'
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'k'
-	int 0x10
-	mov ah, 0x0e
-	mov al, ' '
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'T'
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'h'
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'e'
-	int 0x10
-	mov ah, 0x0e
-	mov al, ' '
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'P'
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'l'
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'a'
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'n'
-	int 0x10
-	mov ah, 0x0e
-	mov al, 'e'
-	int 0x10
-	mov ah, 0x0e
-	mov al, 't'
-	int 0x10
-times 510 - ($-$$) db 0
+bits 32
+section multiboot_header
+    align 4
+    dd 0x1BADB002
+    dd 0x00000000
+    dd -(0x1BADB002 + 0x00000000)
+section .text	
+global start
+extern main	
+extern println
+start:
+	cli
+	mov esp, stack
+	call main
+	hlt
+section .bss
+RESB 8192
+stack:
+
+

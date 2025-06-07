@@ -1,0 +1,3 @@
+int println(const char *string);
+int spinner();
+int panic(char *error);

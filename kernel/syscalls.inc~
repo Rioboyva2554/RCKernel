@@ -1,5 +1,0 @@
-; mostly gdt stuff for now
-
-loadgdt:
-cli
-call setgdt
